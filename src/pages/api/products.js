@@ -1,12 +1,13 @@
 var products = [
-    { name: 'Pen', quantity: 2, price: 10 },
-    { name: 'Book', quantity: 1, price: 20 },
+    { name: 'Pen', quantity: 2, price: 10.00 },
+    { name: 'Book', quantity: 1, price: 20.00 },
 ]
 
 export default function handler(req, res) {
     if (req.method === 'PUT') {
         var { name, quantity, price } = req.query;
-        price = parseInt(price) || 0;
+        price = parseFloat(price) || 0;
+        quantity = parseInt(quantity) || 0;
 
         var added = false;
         for (var i = 0; i < products.length; i++) {
