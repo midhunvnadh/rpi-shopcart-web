@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
 
+var timer = null;
+
 const ProductTable = () => {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
     const [total, setTotal] = useState(0);
     const [loader, setLoader] = useState(true);
 
@@ -14,6 +16,17 @@ const ProductTable = () => {
             setLoader(true)
         })
     };
+
+    const [muted, setMuted] = useState(true)
+
+    var player = null;
+
+    const play = () => {
+        if (!player) {
+            player = new Audio("/success.mp3");
+        }
+        player.play();
+    }
 
     const refreshProducts = () => {
         fetch("/api/products").then(data => data.json()).then(data => {
@@ -28,9 +41,15 @@ const ProductTable = () => {
     }
 
     useEffect(() => {
-        setInterval(() => {
-            refreshProducts()
-        }, 2000)
+        console.log("played!")
+        play();
+    }, [total])
+
+    useEffect(() => {
+        if (timer !== undefined) {
+            clearInterval(timer)
+        }
+        timer = setInterval(refreshProducts, 1500)
         refreshProducts()
     }, [])
 
@@ -76,7 +95,7 @@ const ProductTable = () => {
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
-                                {products.map((product, index) => (
+                                {(products || []).map((product, index) => (
                                     <tr key={index}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
