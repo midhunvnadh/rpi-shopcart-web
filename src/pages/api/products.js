@@ -23,7 +23,12 @@ export default function handler(req, res) {
     }
     if (req.method === 'DELETE') {
         var { index } = req.query;
-        products = products.filter((_, i) => i !== parseInt(index));
+        products = products.map((data, i) => {
+            if (i == parseInt(index)) {
+                data.quantity -= 1
+            }
+            return data
+        }).filter(data => data.quantity > 0);
         console.log(products)
     }
     res.status(200).json(products.length > 0 ? products : [])

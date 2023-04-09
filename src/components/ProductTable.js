@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaMinus, FaTrashAlt } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
 
 var timer = null;
@@ -112,7 +112,7 @@ const ProductTable = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <button onClick={() => handleRemoveProduct(index)}>
-                                                <FaTrashAlt className="text-red-600 hover:text-red-900" />
+                                                <FaMinus className="text-red-600 hover:text-red-900" />
                                             </button>
                                         </td>
                                     </tr>
